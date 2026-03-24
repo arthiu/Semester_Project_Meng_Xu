@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ad0684726b0b3b51e17362aed7718e34 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_ad0684726b0b3b51e17362aed7718e34" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_ad0684726b0b3b51e17362aed7718e34 = L.map(
+                "map_ad0684726b0b3b51e17362aed7718e34",
+                {
+                    center: [46.806, 7.162],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d7046180f0d93c5e85f189a821addd77 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d7046180f0d93c5e85f189a821addd77.addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var poly_line_2e437b3c333fa119aa835a89f2ac56b0 = L.polyline(
+                [[46.80549, 7.140123], [46.806711, 7.172136], [46.812081, 7.173246], [46.809385, 7.170446], [46.806711, 7.172136], [46.811223, 7.172643], [46.812081, 7.173246], [46.813063, 7.173218], [46.806711, 7.172136], [46.80609, 7.161261], [46.803911, 7.155266]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_2e437b3c333fa119aa835a89f2ac56b0.bindTooltip(
+                `<div>
+                     Bus 0 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_808b6c08ade590619ea0530e4a1d6d49 = L.marker(
+                [46.803911, 7.155266],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_0504c3314a48ae2acf5c5b3291673ae3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d293cfebeabbce8b52dac27bd8881ca7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_793344d678b98d8da70c5aee7b506d06 = $(`<div id="html_793344d678b98d8da70c5aee7b506d06" style="width: 100.0%; height: 100.0%;">Bus 0 Final Position</div>`)[0];
+                popup_d293cfebeabbce8b52dac27bd8881ca7.setContent(html_793344d678b98d8da70c5aee7b506d06);
+            
+        
+
+        marker_808b6c08ade590619ea0530e4a1d6d49.bindPopup(popup_d293cfebeabbce8b52dac27bd8881ca7)
+        ;
+
+        
+    
+    
+                marker_808b6c08ade590619ea0530e4a1d6d49.setIcon(icon_0504c3314a48ae2acf5c5b3291673ae3);
+            
+    
+            var poly_line_9d99d767c47870897802591318c0c78b = L.polyline(
+                [[46.800233, 7.125455], [46.81181330912885, 7.136875253157107], [46.81181330912885, 7.136875253157107], [46.81181330912885, 7.136875253157107], [46.806306, 7.15117], [46.8013, 7.138046]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_9d99d767c47870897802591318c0c78b.bindTooltip(
+                `<div>
+                     Bus 1 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b8a11141b1622a1b1f9c3de70183be35 = L.marker(
+                [46.8013, 7.138046],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_6b87609d19ddb5a813d579fc4d487e72 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3433d8b4e44b9e9ba8e3391fd63be0a5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c839387ed8d8cb3a04307eb978a30a5b = $(`<div id="html_c839387ed8d8cb3a04307eb978a30a5b" style="width: 100.0%; height: 100.0%;">Bus 1 Final Position</div>`)[0];
+                popup_3433d8b4e44b9e9ba8e3391fd63be0a5.setContent(html_c839387ed8d8cb3a04307eb978a30a5b);
+            
+        
+
+        marker_b8a11141b1622a1b1f9c3de70183be35.bindPopup(popup_3433d8b4e44b9e9ba8e3391fd63be0a5)
+        ;
+
+        
+    
+    
+                marker_b8a11141b1622a1b1f9c3de70183be35.setIcon(icon_6b87609d19ddb5a813d579fc4d487e72);
+            
+    
+            var poly_line_d4d081a49f503de4a78fe389224f9109 = L.polyline(
+                [[46.807676, 7.168025], [46.802898, 7.15141]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_d4d081a49f503de4a78fe389224f9109.bindTooltip(
+                `<div>
+                     Bus 2 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c7483c0e1e0760f791f426e40c1cee32 = L.marker(
+                [46.802898, 7.15141],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_7bad4f53c3d36eec5a4888e93c29fdcf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1856c39f39e7066479bd9542b89bc0b1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3f8161e1fbbfab50d61e0e79e1ddba2e = $(`<div id="html_3f8161e1fbbfab50d61e0e79e1ddba2e" style="width: 100.0%; height: 100.0%;">Bus 2 Final Position</div>`)[0];
+                popup_1856c39f39e7066479bd9542b89bc0b1.setContent(html_3f8161e1fbbfab50d61e0e79e1ddba2e);
+            
+        
+
+        marker_c7483c0e1e0760f791f426e40c1cee32.bindPopup(popup_1856c39f39e7066479bd9542b89bc0b1)
+        ;
+
+        
+    
+    
+                marker_c7483c0e1e0760f791f426e40c1cee32.setIcon(icon_7bad4f53c3d36eec5a4888e93c29fdcf);
+            
+    
+            var poly_line_998457e35fd5987dbe0de6d1bfc3452f = L.polyline(
+                [[46.79857, 7.120788], [46.79857, 7.120788]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_998457e35fd5987dbe0de6d1bfc3452f.bindTooltip(
+                `<div>
+                     Bus 3 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_241ace1ab2bed0e1bff83bb9d3ac6c21 = L.marker(
+                [46.79857, 7.120788],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_f8b3ff8152d017398731fc081548fc73 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_07ecb4f6afd7d60e4f3b130010a0feca = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_193540db8b47dd33237c0dde6d316d54 = $(`<div id="html_193540db8b47dd33237c0dde6d316d54" style="width: 100.0%; height: 100.0%;">Bus 3 Final Position</div>`)[0];
+                popup_07ecb4f6afd7d60e4f3b130010a0feca.setContent(html_193540db8b47dd33237c0dde6d316d54);
+            
+        
+
+        marker_241ace1ab2bed0e1bff83bb9d3ac6c21.bindPopup(popup_07ecb4f6afd7d60e4f3b130010a0feca)
+        ;
+
+        
+    
+    
+                marker_241ace1ab2bed0e1bff83bb9d3ac6c21.setIcon(icon_f8b3ff8152d017398731fc081548fc73);
+            
+    
+            var poly_line_b39c1315d2e3d59dbee9ea2b5a4672de = L.polyline(
+                [[46.800233, 7.125455], [46.800233, 7.125455]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_b39c1315d2e3d59dbee9ea2b5a4672de.bindTooltip(
+                `<div>
+                     Bus 4 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d679e1f6180c445934d33748d8f4d984 = L.marker(
+                [46.800233, 7.125455],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_c56c999fddcbf1db96f2c5e9739679e6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9ca43fa66eeeac8ee8b87738961bd545 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_abd88538fb79ca7bd21332ba7507b0ce = $(`<div id="html_abd88538fb79ca7bd21332ba7507b0ce" style="width: 100.0%; height: 100.0%;">Bus 4 Final Position</div>`)[0];
+                popup_9ca43fa66eeeac8ee8b87738961bd545.setContent(html_abd88538fb79ca7bd21332ba7507b0ce);
+            
+        
+
+        marker_d679e1f6180c445934d33748d8f4d984.bindPopup(popup_9ca43fa66eeeac8ee8b87738961bd545)
+        ;
+
+        
+    
+    
+                marker_d679e1f6180c445934d33748d8f4d984.setIcon(icon_c56c999fddcbf1db96f2c5e9739679e6);
+            
+    
+            var poly_line_8e1f25201f0e8ff5d38515ee781896b5 = L.polyline(
+                [[46.80549, 7.140123], [46.80549, 7.140123]],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "darkred", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_8e1f25201f0e8ff5d38515ee781896b5.bindTooltip(
+                `<div>
+                     Bus 5 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_05b2a252d2c88106e30637bf661e47d7 = L.marker(
+                [46.80549, 7.140123],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_8fa6affa3c8cd23dbf0f81ddadecc682 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_027d90317d66be28a77157e5e57adad0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6abae5ae722ca6e64a1a379514d3cdca = $(`<div id="html_6abae5ae722ca6e64a1a379514d3cdca" style="width: 100.0%; height: 100.0%;">Bus 5 Final Position</div>`)[0];
+                popup_027d90317d66be28a77157e5e57adad0.setContent(html_6abae5ae722ca6e64a1a379514d3cdca);
+            
+        
+
+        marker_05b2a252d2c88106e30637bf661e47d7.bindPopup(popup_027d90317d66be28a77157e5e57adad0)
+        ;
+
+        
+    
+    
+                marker_05b2a252d2c88106e30637bf661e47d7.setIcon(icon_8fa6affa3c8cd23dbf0f81ddadecc682);
+            
+    
+            var poly_line_1a36c39c29532d1471a51b9e4180fc30 = L.polyline(
+                [[46.80954879023868, 7.146038655217258], [46.80954879023868, 7.146038655217258]],
+                {"bubblingMouseEvents": true, "color": "cadetblue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "cadetblue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_1a36c39c29532d1471a51b9e4180fc30.bindTooltip(
+                `<div>
+                     Bus 6 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_dd5f347b9d8c7674e7683692106cce46 = L.marker(
+                [46.80954879023868, 7.146038655217258],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_1ec3b6cdd2ba07445490875aef96276f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "cadetblue",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_eddb9a67561cee194a4ddf15dcb22378 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_967e96473935bd9607d23e6f1bd7a3d3 = $(`<div id="html_967e96473935bd9607d23e6f1bd7a3d3" style="width: 100.0%; height: 100.0%;">Bus 6 Final Position</div>`)[0];
+                popup_eddb9a67561cee194a4ddf15dcb22378.setContent(html_967e96473935bd9607d23e6f1bd7a3d3);
+            
+        
+
+        marker_dd5f347b9d8c7674e7683692106cce46.bindPopup(popup_eddb9a67561cee194a4ddf15dcb22378)
+        ;
+
+        
+    
+    
+                marker_dd5f347b9d8c7674e7683692106cce46.setIcon(icon_1ec3b6cdd2ba07445490875aef96276f);
+            
+    
+            var poly_line_f10de36b42f5515ddb923c8b88871cf0 = L.polyline(
+                [[46.81181330912885, 7.136875253157107], [46.81181330912885, 7.136875253157107]],
+                {"bubblingMouseEvents": true, "color": "darkgreen", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "darkgreen", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            poly_line_f10de36b42f5515ddb923c8b88871cf0.bindTooltip(
+                `<div>
+                     Bus 7 Trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3a8c4f70cf9f2a59ecddc10fded589c2 = L.marker(
+                [46.81181330912885, 7.136875253157107],
+                {
+}
+            ).addTo(map_ad0684726b0b3b51e17362aed7718e34);
+        
+    
+            var icon_eea8200a22136d599f8b19f1a0dcb41b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "bus",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d4a83c9455d64486080463f609c3f149 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_da8570c13f65fe25e79aeee154801190 = $(`<div id="html_da8570c13f65fe25e79aeee154801190" style="width: 100.0%; height: 100.0%;">Bus 7 Final Position</div>`)[0];
+                popup_d4a83c9455d64486080463f609c3f149.setContent(html_da8570c13f65fe25e79aeee154801190);
+            
+        
+
+        marker_3a8c4f70cf9f2a59ecddc10fded589c2.bindPopup(popup_d4a83c9455d64486080463f609c3f149)
+        ;
+
+        
+    
+    
+                marker_3a8c4f70cf9f2a59ecddc10fded589c2.setIcon(icon_eea8200a22136d599f8b19f1a0dcb41b);
+            
+</script>
+</html>
