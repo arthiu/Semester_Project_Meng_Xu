@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_250f905cc79671f97c4af0373ceb4559 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_250f905cc79671f97c4af0373ceb4559" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_250f905cc79671f97c4af0373ceb4559 = L.map(
+                "map_250f905cc79671f97c4af0373ceb4559",
+                {
+                    center: [46.806281, 7.175601],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_65aec80a515e6d991c1e14516d6a50af = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_65aec80a515e6d991c1e14516d6a50af.addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var poly_line_b36262fb833b1fdd88f1e70b21317368 = L.polyline(
+                [[46.806281, 7.175601], [46.806281, 7.175601], [46.806281, 7.175601], [46.806281, 7.175601], [46.809385, 7.170446], [46.806281, 7.175601], [46.806281, 7.175601], [46.809385, 7.170446], [46.811451, 7.171016], [46.806711, 7.172136], [46.811451, 7.171016], [46.811451, 7.171016], [46.806711, 7.172136], [46.806711, 7.172136], [46.79857, 7.120788], [46.806711, 7.172136], [46.806711, 7.172136], [46.798991, 7.131395], [46.79857, 7.120788], [46.79857, 7.120788]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.4, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            poly_line_b36262fb833b1fdd88f1e70b21317368.bindTooltip(
+                `<div>
+                     Full Path of Bus 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            ant_path_7c4a1e0612d684f362656fd122655dcc = L.polyline.antPath(
+              [[46.806281, 7.175601], [46.806281, 7.175601], [46.806281, 7.175601], [46.806281, 7.175601], [46.809385, 7.170446], [46.806281, 7.175601], [46.806281, 7.175601], [46.809385, 7.170446], [46.811451, 7.171016], [46.806711, 7.172136], [46.811451, 7.171016], [46.811451, 7.171016], [46.806711, 7.172136], [46.806711, 7.172136], [46.79857, 7.120788], [46.806711, 7.172136], [46.806711, 7.172136], [46.798991, 7.131395], [46.79857, 7.120788], [46.79857, 7.120788]],
+              {
+  "stroke": true,
+  "color": "blue",
+  "weight": 5,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "blue",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var marker_884dc5b4a61e5a7834d26743e0787360 = L.marker(
+                [46.806360999999995, 7.175601],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_efb683e8846caab10a1e7421197c1749 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e1\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_884dc5b4a61e5a7834d26743e0787360.bindTooltip(
+                `<div>
+                     <b>Stop 1</b><br>Station: 8589141<br>Arrival: 0.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_884dc5b4a61e5a7834d26743e0787360.setIcon(div_icon_efb683e8846caab10a1e7421197c1749);
+            
+    
+            var marker_925a59a4fea5da9d1e76a7c9a9f0d86d = L.marker(
+                [46.80944439696962, 7.17050539696962],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_5fab0cc92e8b67a853b19ea9283cb733 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e2\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_925a59a4fea5da9d1e76a7c9a9f0d86d.bindTooltip(
+                `<div>
+                     <b>Stop 2</b><br>Station: 8589138<br>Arrival: 20.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_925a59a4fea5da9d1e76a7c9a9f0d86d.setIcon(div_icon_5fab0cc92e8b67a853b19ea9283cb733);
+            
+    
+            var marker_29309fecab080e6f5bcf6fdec71c95a9 = L.marker(
+                [46.806281, 7.175689],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_68fb7516211ae49ba69a7abd19bb43b6 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e3\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_29309fecab080e6f5bcf6fdec71c95a9.bindTooltip(
+                `<div>
+                     <b>Stop 3</b><br>Station: 8589141<br>Arrival: 30.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_29309fecab080e6f5bcf6fdec71c95a9.setIcon(div_icon_68fb7516211ae49ba69a7abd19bb43b6);
+            
+    
+            var marker_e446b37963a17d24e9de006cc42c0bd6 = L.marker(
+                [46.80931994617613, 7.170511053823869],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_6d53b78094127387ff2489d5e57bc126 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e4\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_e446b37963a17d24e9de006cc42c0bd6.bindTooltip(
+                `<div>
+                     <b>Stop 4</b><br>Station: 8589138<br>Arrival: 30.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e446b37963a17d24e9de006cc42c0bd6.setIcon(div_icon_6d53b78094127387ff2489d5e57bc126);
+            
+    
+            var marker_5ad56ae335e270d4eff22a4782db4b04 = L.marker(
+                [46.811355, 7.171016],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_d5a50bbb8e78655c689ccbb66970c532 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e5\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_5ad56ae335e270d4eff22a4782db4b04.bindTooltip(
+                `<div>
+                     <b>Stop 5</b><br>Station: 8591766<br>Arrival: 30.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5ad56ae335e270d4eff22a4782db4b04.setIcon(div_icon_d5a50bbb8e78655c689ccbb66970c532);
+            
+    
+            var marker_7d8d27d7a030a9bb3cc1254fa58c8a88 = L.marker(
+                [46.806640289321884, 7.172065289321881],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_24c4725c5b5d5e81a3adc4f76723cd17 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e6\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_7d8d27d7a030a9bb3cc1254fa58c8a88.bindTooltip(
+                `<div>
+                     <b>Stop 6</b><br>Station: 8589152<br>Arrival: 30.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7d8d27d7a030a9bb3cc1254fa58c8a88.setIcon(div_icon_24c4725c5b5d5e81a3adc4f76723cd17);
+            
+    
+            var marker_69c2a0b072dba428cf814d0a78694b62 = L.marker(
+                [46.811451, 7.1709119999999995],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_384dc7a25a3d00fd3d0828df8731f420 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e7\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_69c2a0b072dba428cf814d0a78694b62.bindTooltip(
+                `<div>
+                     <b>Stop 7</b><br>Station: 8591766<br>Arrival: 40.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_69c2a0b072dba428cf814d0a78694b62.setIcon(div_icon_384dc7a25a3d00fd3d0828df8731f420);
+            
+    
+            var marker_bf5c23e22eac2595612e9cc637ede64e = L.marker(
+                [46.806787367532365, 7.172059632467632],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_8ec34235377ac46742759f83f228957a = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e8\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_bf5c23e22eac2595612e9cc637ede64e.bindTooltip(
+                `<div>
+                     <b>Stop 8</b><br>Station: 8589152<br>Arrival: 40.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bf5c23e22eac2595612e9cc637ede64e.setIcon(div_icon_8ec34235377ac46742759f83f228957a);
+            
+    
+            var marker_4d8ee1eaed0fd0e4b4b5f401d23530ea = L.marker(
+                [46.798682, 7.120788],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_817e8d638204a74975b5a24282a3b81f = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e9\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_4d8ee1eaed0fd0e4b4b5f401d23530ea.bindTooltip(
+                `<div>
+                     <b>Stop 9</b><br>Station: 8589131<br>Arrival: 40.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4d8ee1eaed0fd0e4b4b5f401d23530ea.setIcon(div_icon_817e8d638204a74975b5a24282a3b81f);
+            
+    
+            var marker_0daebb5ddcc30de1961c4c6715fabbf6 = L.marker(
+                [46.806793024386614, 7.172218024386618],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_03861da3defdcd5079ab34d80ecbfa87 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e10\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_0daebb5ddcc30de1961c4c6715fabbf6.bindTooltip(
+                `<div>
+                     <b>Stop 10</b><br>Station: 8589152<br>Arrival: 50.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0daebb5ddcc30de1961c4c6715fabbf6.setIcon(div_icon_03861da3defdcd5079ab34d80ecbfa87);
+            
+    
+            var marker_7675c54ce76aa8f607daef646ef5e9ee = L.marker(
+                [46.798991, 7.131515],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_ec4a5fb5a5f12c99ace6d041dbd523f2 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e11\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_7675c54ce76aa8f607daef646ef5e9ee.bindTooltip(
+                `<div>
+                     <b>Stop 11</b><br>Station: 8577786<br>Arrival: 50.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7675c54ce76aa8f607daef646ef5e9ee.setIcon(div_icon_ec4a5fb5a5f12c99ace6d041dbd523f2);
+            
+    
+            var marker_65fb90ac041e3ab8b53602b5fea3e0f9 = L.marker(
+                [46.79848231875913, 7.120875681240867],
+                {
+}
+            ).addTo(map_250f905cc79671f97c4af0373ceb4559);
+        
+    
+            var div_icon_494379c7481b08847fadc0d4f6e8f2f7 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-family: \u0027Arial\u0027, sans-serif; \n            color: white; \n            background-color: blue;\n            border-radius: 50%;\n            width: 22px;\n            height: 22px;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-size: 8pt;\n            font-weight: bold;\n            border: 1.5px solid white;\n            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);\n        \"\u003e12\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+            marker_65fb90ac041e3ab8b53602b5fea3e0f9.bindTooltip(
+                `<div>
+                     <b>Stop 12</b><br>Station: 8589131<br>Arrival: 50.0 min
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_65fb90ac041e3ab8b53602b5fea3e0f9.setIcon(div_icon_494379c7481b08847fadc0d4f6e8f2f7);
+            
+</script>
+</html>
