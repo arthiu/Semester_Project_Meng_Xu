@@ -12,6 +12,32 @@ import os
 import json
 from datetime import datetime
 
+# Define the calibration function
+def auto_calibrate_weights(costs_list, max_possible_detour_mins):
+    # Find the most expensive bus in the fleet to base our penalties on
+    max_cost = max(costs_list)  
+    
+    # Travel cost weight: Set to 1 so the objective function evaluates in actual currency
+    b_1 = 1.0 
+    
+    # Lateness penalty: Make 1 minute of delay 15x more expensive than 1 minute of bus.
+    b_3 = max_cost * 15.0 
+    
+    # Calculate the absolute worst-case scenario cost to serve a passenger:
+    # (Longest possible detour driving cost) + (Penalty for being up to 5 minutes late)
+    max_service_cost = (max_possible_detour_mins * max_cost) + (5 * b_3)
+    
+    # Rejection cost: Must be unquestionably worse than the worst-case service cost.
+    # We double it to guarantee the solver always tries to pick the passenger up.
+    # c_0 = max_service_cost * 1.2 #2.0  
+    
+    c_0 = max_cost * 20.0 
+    
+    # Rejection weight multiplier (keep at 1, as c_0 handles the actual magnitude)
+    b_2 = 1.0
+    
+    return b_1, b_2, b_3, c_0
+
 def get_travel_time(orig, dest, current_t, travel_dict):
     if orig == 0 or dest == 0: return 0.0 # Virtual nodes take 0 mins
     if orig == dest: return 0.0
