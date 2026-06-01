@@ -25,7 +25,7 @@
     "M": 4000,
     "M_cap": 12,
     "M_time_window": 1600,
-    "max_opt_time_seconds": 120,
+    "max_opt_time_seconds": 480,
     "start_node_limit": 1000,
     "seed": 42,
     "mip_focus_feasibility": 1,
