@@ -12,7 +12,52 @@ import os
 import json
 from datetime import datetime
 
-# Define the calibration function
+def extract_simulation_params(csv_path):
+    # Load the CSV file into a pandas DataFrame (like a Python Excel table).
+    df = pd.read_csv(csv_path)
+    
+    # Convert the 'arrival_time' column from plain text strings (e.g., "15:23:28") 
+    # into actual datetime objects so Python can mathematically add and subtract the times.
+    df['arrival_time'] = pd.to_datetime(df['arrival_time'], format='%H:%M:%S')
+    
+    # Sort the data by station_id and chronologically.
+    # Every bus that stops at Station A in the exact order they arrive.
+    df_sorted = df.sort_values(by=['station_id', 'arrival_time'])
+    
+    # Shift the arrival times up by one row within each station group.
+    # Now, each row contains the arrival time of the current bus AND the 'next_arrival' of the following bus.
+    df_sorted['next_arrival'] = df_sorted.groupby('station_id')['arrival_time'].shift(-1)
+    
+    # Subtract the current bus time from the next bus time to find the gap.
+    # Divide total seconds by 60 to get the exact gap in minutes.
+    df_sorted['headway_mins'] = (df_sorted['next_arrival'] - df_sorted['arrival_time']).dt.total_seconds() / 60.0
+    
+    # Filter out gaps longer than 2 hours (< 120 mins). 
+    # This removes overnight/service breaks which shouldn't count as standard passenger wait time.
+    valid_headways = df_sorted[df_sorted['headway_mins'] < 120]
+    
+    # Instead of the average, take the 90th percentile. 
+    pax_max_wait = valid_headways['headway_mins'].quantile(0.90)
+    
+    # Sort by bus_id and stop_sequence to track a physical bus as it drives its route.
+    df_route = df.sort_values(by=['bus_id', 'stop_sequence'])
+    
+    # Shift the arrival time up by one row to bring the arrival time at the NEXT stop into the current row.
+    df_route['next_station_time'] = df_route.groupby('bus_id')['arrival_time'].shift(-1)
+    
+    # Subtract the times to find out exactly how many minutes it took the bus to drive from Stop A to Stop B.
+    df_route['travel_time_mins'] = (df_route['next_station_time'] - df_route['arrival_time']).dt.total_seconds() / 60.0
+    
+    # Calculate the mean (average) of all these short station-to-station hops.
+    # This gives a baseline for how long direct travel takes, helping you calibrate detour penalties (a_max).
+    avg_travel_time = df_route[df_route['travel_time_mins'] > 0]['travel_time_mins'].mean()
+    
+    # --- PART 4: RETURN EXTRACTED PARAMS ---
+    return {
+        "pax_max_wait": int(round(pax_max_wait)), # Rounds 
+        "avg_travel_time": avg_travel_time        # Averages 
+    }
+
 def auto_calibrate_weights(costs_list, max_possible_detour_mins):
     # Find the most expensive bus in the fleet to base our penalties on
     max_cost = max(costs_list)  
