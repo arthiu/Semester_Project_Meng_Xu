@@ -1,6 +1,6 @@
 {
-    "init_reqs_num_poisson_lambda": 15,
-    "reqs_num_poisson_lambda": 10,
+    "init_reqs_num_poisson_lambda": 5,
+    "reqs_num_poisson_lambda": 7,
     "reqs_pax_size_poisson_lambda": 2,
     "poisson_clip_lb": 1,
     "poisson_clip_ub": 8,
@@ -12,7 +12,7 @@
     "cap3": 12,
     "cost1": 0.87,
     "cost2": 0.94,
-    "cost3": 0.94,
+    "cost3": 0.99,
     "t_start": 0,
     "t_end": 60,
     "interval": 10,
@@ -21,7 +21,7 @@
     "pax_max_wait": 13,
     "board_alight_time": 0.03666666666666667,
     "max_late": 60,
-    "c_0": 18.799999999999997,
+    "c_0": 19.8,
     "M": 4000,
     "M_cap": 12,
     "M_time_window": 1600,
@@ -39,5 +39,5 @@
     "varbranch": -1,
     "b_1": 1.0,
     "b_2": 1.0,
-    "b_3": 14.1
+    "b_3": 14.85
 }

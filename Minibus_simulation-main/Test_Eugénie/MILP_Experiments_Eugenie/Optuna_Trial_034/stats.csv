@@ -1,0 +1,3 @@
+time_step,new_reqs_presented,reqs_rejected,reqs_abandonned,obj_cost,in_transit_carried_over,solve_time_seconds,mip_gap,node_count,solve_status
+0,18,8,0,2119.089492672031,9,240.02193188667297,0.9984551064278656,41809.0,9
+10,15,11,0,2756.031799999889,10,240.01664400100708,0.9970714692380833,34575.0,9
