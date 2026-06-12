@@ -1,6 +1,6 @@
 {
-    "init_reqs_num_poisson_lambda": 5,
-    "reqs_num_poisson_lambda": 8,
+    "init_reqs_num_poisson_lambda": 20,
+    "reqs_num_poisson_lambda": 20,
     "reqs_pax_size_poisson_lambda": 2,
     "poisson_clip_lb": 1,
     "poisson_clip_ub": 8,
