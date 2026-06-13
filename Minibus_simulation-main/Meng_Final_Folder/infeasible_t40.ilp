@@ -1,0 +1,24 @@
+\ Model MILP_base_copy
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+\ Signature: 0x678815b12390702a
+Minimize
+ 
+Subject To
+ R2854: 12 x[9,10,0] + q_k[9,0] - q_k[10,0] <= 11
+ R3138: 12 x[10,11,0] + q_k[10,0] - q_k[11,0] <= 8
+ R3422: 12 x[11,12,0] + q_k[11,0] - q_k[12,0] <= 11
+ R3706: 12 x[12,13,0] + q_k[12,0] - q_k[13,0] <= 8
+ R29911: x[9,10,0] = 1
+ R29912: x[10,11,0] = 1
+ R29913: x[11,12,0] = 1
+ R29914: x[12,13,0] = 1
+Bounds
+ q_k[10,0] free
+ q_k[11,0] free
+ q_k[12,0] free
+ -infinity <= q_k[13,0] <= 6
+Binaries
+ x[9,10,0] x[10,11,0] x[11,12,0] x[12,13,0]
+Generals
+ q_k[9,0] q_k[10,0] q_k[11,0] q_k[12,0] q_k[13,0]
+End

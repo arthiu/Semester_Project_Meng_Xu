@@ -308,9 +308,13 @@ def model_construction(params, N, P_nodes, P_sched, P_wait, D_nodes, P_and_D, S_
         for j in N:
             for k in bus_idx:
                 M_time_window_ij = l_dict[i] + params["max_late"] + params["w_max"] + s_dict[i] + t_dict[i, j] - e_dict[j]
+                
                 if M_time_window_ij < 0:
-                    continue
+                    M_time_window_ij = params["M_time_window"]
 
+                model_MILP_base.addConstr(
+                    a_k[i, k] + w_k[i, k] + s_dict[i] + t_dict[i, j] - M_time_window_ij * (1 - x_base[i, j, k]) <= a_k[j, k]
+                )
                 model_MILP_base.addConstr(
                     a_k[i, k] + w_k[i, k] + s_dict[i] + t_dict[i, j] - M_time_window_ij * (1 - x_base[i, j, k]) <= a_k[j, k]
                 )
@@ -602,14 +606,34 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
         
         ## 5.3 Fallback plan: If solver hits time limit, reject all new passengers and solve for already scheduled/in-transit passengers only
         if model_MILP_base.status == gp.GRB.TIME_LIMIT and model_MILP_base.SolCount == 0: 
-            print(f"⚠️ t={t}: SOLVER OVERWHELMED. Triggering Fallback Plan...")
+            #print(f"⚠️ t={t}: SOLVER OVERWHELMED. Triggering Fallback Plan...")
             
+            #for i in P_wait:
+            #    model_MILP_base.addConstr(y[i] == 0, name=f"panic_reject_{i}")
+            
+            #model_MILP_base.Params.TimeLimit = 480
+
+            #model_MILP_base.Params.MIPFocus = 1 
+            #model_MILP_base.Params.Heuristics = 0.1 
+
+            #print("   -> Re-routing only active/ghost passengers...")
+            #model_MILP_base.optimize()
             for i in P_wait:
                 model_MILP_base.addConstr(y[i] == 0, name=f"panic_reject_{i}")
             
-            model_MILP_base.Params.TimeLimit = 120
-            print("   -> Re-routing only active/ghost passengers...")
-            model_MILP_base.optimize()
+            # 2. Reset time limit to 3 minutes (You won't need 8 minutes for pure feasibility)
+            model_MILP_base.Params.TimeLimit = 180
+            
+            # 3. Focus on feasibility and reset heuristics to default
+            model_MILP_base.Params.MIPFocus = 1 
+            model_MILP_base.Params.Heuristics = 0.05 
+            
+            # 4. --- THE MAGIC KEY: PURE FEASIBILITY ---
+            # Tell Gurobi to completely ignore all costs and lateness penalties.
+            model_MILP_base.setObjective(0.0, gp.GRB.MINIMIZE)
+            
+            print("   -> Re-routing active/ghost passengers (Pure Feasibility Mode)...")
+            model_MILP_base.optimize(my_callback)
 
         # 6. System State Update
         if model_MILP_base.status in [gp.GRB.OPTIMAL, gp.GRB.TIME_LIMIT] and model_MILP_base.SolCount > 0:
