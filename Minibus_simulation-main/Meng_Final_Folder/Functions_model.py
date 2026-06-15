@@ -307,10 +307,12 @@ def model_construction(params, N, P_nodes, P_sched, P_wait, D_nodes, P_and_D, S_
     for i in N:
         for j in N:
             for k in bus_idx:
-                M_time_window_ij = l_dict[i] + params["max_late"] + params["w_max"] + s_dict[i] + t_dict[i, j] - e_dict[j]
+                #M_time_window_ij = l_dict[i] + params["max_late"] + params["w_max"] + s_dict[i] + t_dict[i, j] - e_dict[j]
                 
-                if M_time_window_ij < 0:
-                    M_time_window_ij = params["M_time_window"]
+                #if M_time_window_ij < 0:
+                #    M_time_window_ij = params["M_time_window"]
+
+                M_time_window_ij = params["M_time_window"]  # Use a large constant for the time window constraint
 
                 model_MILP_base.addConstr(
                     a_k[i, k] + w_k[i, k] + s_dict[i] + t_dict[i, j] - M_time_window_ij * (1 - x_base[i, j, k]) <= a_k[j, k]
@@ -341,7 +343,8 @@ def model_construction(params, N, P_nodes, P_sched, P_wait, D_nodes, P_and_D, S_
         for k in bus_idx:
             model_MILP_base.addConstr(
                 a_k[i+n_req, k] - (a_k[i, k] + w_k[i,k] + s_dict[i]) <= params["a_max"] * t_dict[i, i+n_req] 
-                + params["M_time_window"] * (1 - x_base.sum(i, '*', k))
+                + params["M_time_window"] * (1 - x_base.sum(i, '*', k)),
+                name=f"detour_limit_{i}_{k}"
             )
 
     ### 6.3.5 Minimum travel time constraint between paired pickup and dropoff nodes
@@ -606,7 +609,7 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
         
         ## 5.3 Fallback plan: If solver hits time limit, reject all new passengers and solve for already scheduled/in-transit passengers only
         if model_MILP_base.status == gp.GRB.TIME_LIMIT and model_MILP_base.SolCount == 0: 
-            #print(f"⚠️ t={t}: SOLVER OVERWHELMED. Triggering Fallback Plan...")
+            print(f"⚠️ t={t}: SOLVER OVERWHELMED. Triggering Fallback Plan...")
             
             #for i in P_wait:
             #    model_MILP_base.addConstr(y[i] == 0, name=f"panic_reject_{i}")
@@ -617,23 +620,36 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
             #model_MILP_base.Params.Heuristics = 0.1 
 
             #print("   -> Re-routing only active/ghost passengers...")
-            #model_MILP_base.optimize()
+            #model_MILP_base.optimize(my_callback)
+
             for i in P_wait:
                 model_MILP_base.addConstr(y[i] == 0, name=f"panic_reject_{i}")
             
-            # 2. Reset time limit to 3 minutes (You won't need 8 minutes for pure feasibility)
-            model_MILP_base.Params.TimeLimit = 180
+            # 2. Reset time limit to 3 minutes
+            model_MILP_base.Params.TimeLimit = 480
             
-            # 3. Focus on feasibility and reset heuristics to default
+            # 3. Focus on feasibility
             model_MILP_base.Params.MIPFocus = 1 
-            model_MILP_base.Params.Heuristics = 0.05 
+            model_MILP_base.Params.SolutionLimit = 1
             
-            # 4. --- THE MAGIC KEY: PURE FEASIBILITY ---
-            # Tell Gurobi to completely ignore all costs and lateness penalties.
-            model_MILP_base.setObjective(0.0, gp.GRB.MINIMIZE)
+            # 4. --- THE RULE DROP ---
+            # Remove the strict physical detour limits so trapped buses can route home
+            for c in model_MILP_base.getConstrs():
+                if "detour_limit" in c.ConstrName:
+                    model_MILP_base.remove(c)
             
-            print("   -> Re-routing active/ghost passengers (Pure Feasibility Mode)...")
+            print("   -> Re-routing active/ghost passengers (Detour rules temporarily disabled)...")
             model_MILP_base.optimize(my_callback)
+
+            if model_MILP_base.SolCount == 0:
+                print("🚨 STILL NO SOLUTION! Forcing Infeasibility Check...")
+                model_MILP_base.Params.TimeLimit = gp.GRB.INFINITY 
+                model_MILP_base.optimize()
+                if model_MILP_base.status == gp.GRB.INFEASIBLE:
+                    model_MILP_base.computeIIS()
+                    model_MILP_base.write(f"fallback_infeasible_t{t}.ilp")
+                    print(f"✅ Saved contradiction to fallback_infeasible_t{t}.ilp. Check your folder!")
+                break
 
         # 6. System State Update
         if model_MILP_base.status in [gp.GRB.OPTIMAL, gp.GRB.TIME_LIMIT] and model_MILP_base.SolCount > 0:
@@ -790,7 +806,7 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
                                 passenger_history[req_id]["assigned_bus"] = k
                             if sum(x_sol[i, j, k] for j in N) > 0.5:
                                 if passenger_history[req_id]["time_picked_up"] is None:
-                                    passenger_history[req_id]["time_picked_up"] = max(a_sol[i, k], req_t_p[idx]) + w_sol.get((i, k), 0) # NEW
+                                    passenger_history[req_id]["time_picked_up"] = a_sol[i, k] + w_sol.get((i, k), 0) #max(a_sol[i, k], req_t_p[idx]) + w_sol.get((i, k), 0) # NEW
 
             ### 6.5.9 Sort the next_R_sched so that ghost requests are in front of their corresponding normal requests, to ensure they get assigned to the same vehicle in the next iteration
             final_next_R_sched = []
