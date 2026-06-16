@@ -101,7 +101,7 @@ def get_realized_route(df_routes, bus_id):
                     "arrival_time": round(arr_time, 2),
                     "passenger_load": round(row["passenger_load"])
                 })
-                
+                    
     # --- CLEANUP BLOCK ---
     # Remove the 0-load dips caused by S_nodes and Ghost carry-overs
     cleaned_route = []

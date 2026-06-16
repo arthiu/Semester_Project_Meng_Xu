@@ -68,8 +68,6 @@ def auto_calibrate_weights(costs_list, max_possible_detour_mins):
     # 5. Base rejection cost: Set to 20x to strongly discourage rejections and make it the highest penalty
     c_0 = max_cost * 20.0 
     
-    
-    
     return b_1, b_2, b_3, c_0
 
 def get_travel_time(orig, dest, current_t, travel_dict):
@@ -307,12 +305,7 @@ def model_construction(params, N, P_nodes, P_sched, P_wait, D_nodes, P_and_D, S_
     for i in N:
         for j in N:
             for k in bus_idx:
-                #M_time_window_ij = l_dict[i] + params["max_late"] + params["w_max"] + s_dict[i] + t_dict[i, j] - e_dict[j]
-                
-                #if M_time_window_ij < 0:
-                #    M_time_window_ij = params["M_time_window"]
-
-                M_time_window_ij = params["M_time_window"]  # Use a large constant for the time window constraint
+                M_time_window_ij = params["M_time_window"]
 
                 model_MILP_base.addConstr(
                     a_k[i, k] + w_k[i, k] + s_dict[i] + t_dict[i, j] - M_time_window_ij * (1 - x_base[i, j, k]) <= a_k[j, k]
@@ -407,7 +400,7 @@ def model_construction(params, N, P_nodes, P_sched, P_wait, D_nodes, P_and_D, S_
     ### 6.5.2 Current Horizon Start Time Constraint
     for k in bus_idx:
         model_MILP_base.addConstr(
-            e_dict[S_nodes[k]] <= a_k[S_nodes[k], k],
+            a_k[S_nodes[k], k] == e_dict[S_nodes[k]],
             name=f"force_start_time_{k}"
         )
     
@@ -555,6 +548,11 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
             e_dict[i] = params["t_end"] 
             l_dict[i] = 1440
 
+        for k in range(len(K)):
+            i = S_nodes[k]
+            e_dict[i] = max(t, K[k][2]) 
+            l_dict[i] = 1440
+
         ## 4.10 Capacities and demand for each node
         Q = {}
 
@@ -610,30 +608,18 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
         ## 5.3 Fallback plan: If solver hits time limit, reject all new passengers and solve for already scheduled/in-transit passengers only
         if model_MILP_base.status == gp.GRB.TIME_LIMIT and model_MILP_base.SolCount == 0: 
             print(f"⚠️ t={t}: SOLVER OVERWHELMED. Triggering Fallback Plan...")
-            
-            #for i in P_wait:
-            #    model_MILP_base.addConstr(y[i] == 0, name=f"panic_reject_{i}")
-            
-            #model_MILP_base.Params.TimeLimit = 480
-
-            #model_MILP_base.Params.MIPFocus = 1 
-            #model_MILP_base.Params.Heuristics = 0.1 
-
-            #print("   -> Re-routing only active/ghost passengers...")
-            #model_MILP_base.optimize(my_callback)
 
             for i in P_wait:
                 model_MILP_base.addConstr(y[i] == 0, name=f"panic_reject_{i}")
             
-            # 2. Reset time limit to 3 minutes
+            # 2. Reset time limit
             model_MILP_base.Params.TimeLimit = 480
             
             # 3. Focus on feasibility
             model_MILP_base.Params.MIPFocus = 1 
             model_MILP_base.Params.SolutionLimit = 1
             
-            # 4. --- THE RULE DROP ---
-            # Remove the strict physical detour limits so trapped buses can route home
+            # 4. Remove the strict physical detour limits so trapped buses can route home
             for c in model_MILP_base.getConstrs():
                 if "detour_limit" in c.ConstrName:
                     model_MILP_base.remove(c)
@@ -652,7 +638,7 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
                 break
 
         # 6. System State Update
-        if model_MILP_base.status in [gp.GRB.OPTIMAL, gp.GRB.TIME_LIMIT] and model_MILP_base.SolCount > 0:
+        if model_MILP_base.SolCount > 0:
             # 6.1 Extract the solution values for decision variables
             x_sol = model_MILP_base.getAttr('X', x_base)
             y_sol = model_MILP_base.getAttr('X', y)
@@ -701,10 +687,7 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
                     actual_arrival = a_sol.get((curr_node, k), t)
 
                     ### 6.4.2 Calculate action time
-                    if is_pickup:
-                        action_time = max(actual_arrival, req_t_p[curr_node]) + w_sol.get((curr_node, k), 0)
-                    else:
-                        action_time = actual_arrival + w_sol.get((curr_node, k), 0)
+                    action_time = actual_arrival + w_sol.get((curr_node, k), 0) 
 
                     ### 6.4.3 Append the current node's information to the route
                     route_for_k.append({
@@ -761,7 +744,7 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
                         assigned_k = None
                         for k in bus_idx:
                             if sum(x_sol[i, j, k] for j in N) > 0.5:
-                                p_time = max(a_sol[i, k], req_t_p[idx]) + w_sol.get((i, k), 0)
+                                p_time = a_sol[i, k] + w_sol.get((i, k), 0)
                                 assigned_k = k
                                 break
                         
@@ -783,6 +766,11 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
                                     if a_sol[n_idx, assigned_k] <= t + params["interval"] and a_sol[n_idx, assigned_k] > max_a:
                                         max_a = a_sol[n_idx, assigned_k]
                                         last_visited = n_idx
+                            
+                            for j in N:
+                                if x_sol[last_visited, j, assigned_k] > 0.5 and a_sol[j, assigned_k] > t_next:
+                                    last_visited = j
+                                    break
 
                             ghost_req[1] = node_to_loc[last_visited]
                             ghost_req.append("ghost") 
@@ -806,7 +794,7 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
                                 passenger_history[req_id]["assigned_bus"] = k
                             if sum(x_sol[i, j, k] for j in N) > 0.5:
                                 if passenger_history[req_id]["time_picked_up"] is None:
-                                    passenger_history[req_id]["time_picked_up"] = a_sol[i, k] + w_sol.get((i, k), 0) #max(a_sol[i, k], req_t_p[idx]) + w_sol.get((i, k), 0) # NEW
+                                    passenger_history[req_id]["time_picked_up"] = a_sol[i, k] + w_sol.get((i, k), 0)
 
             ### 6.5.9 Sort the next_R_sched so that ghost requests are in front of their corresponding normal requests, to ensure they get assigned to the same vehicle in the next iteration
             final_next_R_sched = []
@@ -840,8 +828,20 @@ def run_simulation(params, stations, origin_stations, initial_K, bus_idx, bus_co
                             if a_sol[i, k] <= t_next and a_sol[i, k] > max_a:
                                 max_a = a_sol[i, k]
                                 last_visited_node = i
+                
+                jump_time = max(t_next, max_a)
+
+                if max_a == -1 and K[k][2] > t_next:
+                    jump_time = K[k][2]
+
+                for j in N:
+                    if x_sol[last_visited_node, j, k] > 0.5 and a_sol[j, k] > t_next:
+                        last_visited_node = j
+                        jump_time = a_sol[j, k]
+                        break 
 
                 K[k][1] = node_to_loc[last_visited_node]
+                K[k][2] = jump_time
 
             ## 6.8 Generate new requests for the next iteration
             new_R_wait, new_req_t_p_wait, global_req_id = generate_requests(params, global_req_id, passenger_history, "new_interval", t_next, origin_stations=origin_stations, stations=stations)
